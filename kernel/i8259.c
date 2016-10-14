@@ -11,6 +11,7 @@
 #include "protect.h"
 #include "proto.h"
 
+// extern restart_clock();
 
 /*======================================================================*
                             init_8259A
@@ -42,7 +43,7 @@ PUBLIC void init_8259A()
 	out_byte(INT_S_CTLMASK,	0x1);
 
 	/* Master 8259, OCW1.  */
-	out_byte(INT_M_CTLMASK,	0xFD);
+	out_byte(INT_M_CTLMASK,	0b11111110);
 
 	/* Slave  8259, OCW1.  */
 	out_byte(INT_S_CTLMASK,	0xFF);
@@ -56,4 +57,5 @@ PUBLIC void spurious_irq(int irq)
         disp_str("spurious_irq: ");
         disp_int(irq);
         disp_str("\n");
+        // restart_clock();
 }

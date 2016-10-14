@@ -12,6 +12,7 @@ SELECTOR_KERNEL_CS	equ	8
 extern	cstart
 extern	exception_handler
 extern	spurious_irq
+extern  restart_clock
 
 ; 导入全局变量
 extern	gdt_ptr
@@ -122,10 +123,14 @@ csinit:
 ; 中断和异常 -- 硬件中断
 ; ---------------------------------
 %macro  hwint_master    1
+		cli
         push    %1
         call    spurious_irq
         add     esp, 4
-        hlt
+        ;hlt
+        call restart_clock
+        sti
+        iretd
 %endmacro
 ; ---------------------------------
 

@@ -16,6 +16,7 @@ global	disp_str
 global	disp_color_str
 global	out_byte
 global	in_byte
+global  restart_clock
 
 ; ========================================================================
 ;                  void disp_str(char * pszInfo);
@@ -115,3 +116,10 @@ in_byte:
 	nop
 	ret
 
+
+
+
+restart_clock:
+        mov al, 0x20;EOI
+        out 0x20, al;INT_M_CTL, al
+        ret
